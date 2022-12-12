@@ -42,39 +42,39 @@
 //   // Setting innerHTML as tab variable
 //   document.getElementById("employees").innerHTML = tab;
 // }
-
-fetch("https://jsonplaceholder.typicode.com/users")
-  .then((res) => {
-    return res.json();
-  })
-  .then((data) => {
-    // console.log(data);
-    window.localStorage.setItem("data", JSON.stringify(data));
-  });
-//   .then((err) => console.log(err));
-//console.log(localStorage);
-
-// const data = { username: 'example' };
-
-// fetch('https://example.com/profile', {
-//   method: 'POST', // or 'PUT'
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify(data),
-// })
-//   .then((response) => response.json())
-//   .then((data) => {
-//     console.log('Success:', data);
+/************ */
+// GET operation
+// fetch("https://jsonplaceholder.typicode.com/users")
+//   .then((res) => {
+//     return res.json();
 //   })
-//   .catch((error) => {
-//     console.error('Error:', error);
+//   .then((data) => {
+//     // console.log(data);
+//     window.localStorage.setItem("data", JSON.stringify(data));
 //   });
-// const newdata = {
-//   title: "karthik",
-//   body: "bar",
-//   userId: 1,
-// };
+/*************** */
+
+const updation = function (data) {
+  fetch("https://jsonplaceholder.typicode.com/users", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  }).then((response) => {
+    console.log(response);
+    //again fetching same url because we posted data that getupdated in next fetched
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log("res0", data);
+        // window.localStorage.setItem("data", JSON.stringify(data));
+      });
+  });
+};
+
 let newdata = {
   address: {
     city: "hyderabad",
@@ -95,42 +95,13 @@ let newdata = {
   username: "catalog",
   website: "hildegard.org",
 };
-const updation = function (data) {
-  fetch("https://jsonplaceholder.typicode.com/users", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  }).then((response) => {
-    console.log(response);
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log("res0", data);
-      });
-    // const res = response.json();
-    // console.log(res);
-    // response
-    //   .forEach((ele, i) => {
-    //     const value = Object.keys(ele);
-    //     console.log(value);
-    //   })
-    //   .then((result) => {
-    //     console.log(value);
-    //   });
-  });
-};
-
-updation(newdata);
+// updation(newdata);
 
 fetch("https://jsonplaceholder.typicode.com/users", {
   method: "POST",
   body: JSON.stringify({
     address: {
-      city: "hyderabad",
+      city: "vizag",
       geo: { lat: "-37.3159", lng: "81.1496" },
       street: "Kulas Light",
       suite: "Apt. 556",
@@ -159,9 +130,8 @@ fetch("https://jsonplaceholder.typicode.com/users", {
     arr.push(json);
     window.localStorage.setItem("data", JSON.stringify(arr));
     arr.forEach((element, index) => {
-      //   window.localStorage.setItem("element", JSON.stringify(element));
       const markup = `<li class="list_${index}">${element.username}</li>`;
-      console.log(markup);
+      // console.log(markup);
       document.querySelector("ul").insertAdjacentHTML("beforeend", markup);
     });
   });
